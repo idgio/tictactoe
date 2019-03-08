@@ -20,17 +20,64 @@ const theme = createMuiTheme({
     },
   },
 });
+const winningStates = [];
+winningStates.push([1, 2, 3]);
+winningStates.push([4, 5, 6]);
+winningStates.push([7, 8, 9]);
+winningStates.push([1, 4, 7]);
+winningStates.push([2, 5, 8]);
+winningStates.push([3, 6, 9]);
+winningStates.push([1, 5, 9]);
+winningStates.push([3, 5, 7]);
 
+function checkboardChanges(oldBoard, newBoard, currentPlayerState)
+{
+
+  return oldBoard.every((value, index) => value === newBoard[index]) ? currentPlayerState : !currentPlayerState;
+  
+}
 
 class Home extends Component {
-    
+  
+  
+    state = {
+      gameActive: true,
+      playerOnePicks: null,
+      playerTwoPicks: null,
+      currentPlayer: true,
+      board: [false,false,false,false,false,false,false,false,false],
+    };
+    handleClickBtn = (i) => {
+      this.setState(state => {
+      const list = state.board.map((item, j) => {
+          if (j === i && item === false) {
+            if(state.currentPlayer)
+            {
+              return 'X';
+            }
+            else{
+              return 'O';
+            }
+          } else {
+            return item;
+          }
+        });
+  
+        return {
+          board: list,
+          currentPlayer: checkboardChanges(state.board, list, state.currentPlayer),
+        };
+      });
+    };
+   
     render(){
+      
         return(
         <MuiThemeProvider theme={theme}>
                 <div>
                     <AppBar />
                     <main >
-                        <HomeLayout />
+                        <HomeLayout {...this.state} handleClickBtn={(i) => this.handleClickBtn(i)}/>
                     </main>
                 </div>
         </MuiThemeProvider>

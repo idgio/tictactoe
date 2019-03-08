@@ -36,27 +36,29 @@ const styles = theme => ({
 });
 
 function HomeLayout(props){
-    const { classes } = props;
-    const spaces = [];
-    for(let i = 0; i < 9; i++)
-    {
-      spaces.push(<GridListTile  cols={1}>
-                <Button variant="outlined" className={classes.button}>
-                   
-                </Button>
-              </GridListTile>);
-    }
+    const { classes, currentPlayer, board, handleClickBtn } = props;
+    
   return (
     <div className={classes.root}>
       <Grid container justify="center" >
         <Grid item  xs={6 }>
           <Paper className={classes.paper}>
-            <Typography variant="title" color="inherit" className={classes.turn}>
-                    Turn: 
-            </Typography>
+            
+                   {currentPlayer === true ? (
+                        <Typography variant="title" color="inherit" className={classes.turn}> Turn X </Typography>
+                    ) : ( 
+                        <Typography variant="title" color="inherit" className={classes.turn}> Turn O </Typography>
+                    )}
+            
             <GridList cellHeight={100} className={classes.gridList} cols={3}>
             
-              {spaces}
+            {(board || []).map((item,i) => (
+              <GridListTile key={i}  cols={1}>
+                <Button variant="outlined" className={classes.button} onClick={() => {handleClickBtn(i)}}>
+                   <span>{item}</span>
+                </Button>
+              </GridListTile>
+            ))}
               
             </GridList>
             <Button variant="contained" color="secondary" className={classes.buttonReset}>
