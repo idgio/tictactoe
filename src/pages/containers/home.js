@@ -30,13 +30,20 @@ winningStates.push([3, 6, 9]);
 winningStates.push([1, 5, 9]);
 winningStates.push([3, 5, 7]);
 
-function checkBoardChanges(oldBoard, newBoard)
-{
-
+function checkBoardChanges(oldBoard, newBoard){
   return oldBoard.every((value, index) => value === newBoard[index]);
-  
 }
-
+function checkWinCondition(playerList) {
+  let win = false;
+  if(playerList.length >= 3)
+  {
+    winningStates.forEach(function(element){
+      if(element.every(o => playerList.includes(o)))
+      {win = true;}
+    });
+  }
+  return win;
+}
 class Home extends Component {
   
   
@@ -46,11 +53,12 @@ class Home extends Component {
       playerTwoPicks: [],
       currentPlayer: true,
       board: [false,false,false,false,false,false,false,false,false],
+      winner: null,
     };
     handleClickBtn = (i) => {
       this.setState(state => {
       const list = state.board.map((item, j) => {
-          if (j === i && item === false) {
+          if (j === i && item === false && state.winner === null) {
             if(state.currentPlayer)
             {
               return 'X';
@@ -65,12 +73,14 @@ class Home extends Component {
       const playerOneList = state.currentPlayer ? state.playerOnePicks.concat(i+1) : state.playerOnePicks;
       const playerTwoList = !state.currentPlayer ? state.playerTwoPicks.concat(i+1) : state.playerTwoPicks;
       const boardChange = checkBoardChanges(state.board, list);
+      const playerList = state.currentPlayer ? playerOneList : playerTwoList;
+      const winStatus = boardChange ? false : checkWinCondition(playerList);
         return {
           board: list,
           currentPlayer:  boardChange ? state.currentPlayer : !state.currentPlayer,
-          playerOnePicks: boardChange ? state.playerOnePicks : playerOneList,
-          playerTwoPicks: boardChange ? state.playerTwoPicks : playerTwoList,
-          
+          playerOnePicks: boardChange ? state.playerOnePicks : playerOneList.sort(function(a, b) { return a - b }),
+          playerTwoPicks: boardChange ? state.playerTwoPicks : playerTwoList.sort(function(a, b) { return a - b }),
+          winner: winStatus ? (state.currentPlayer ? 'WINNER X!' : 'WINNER O!') : (state.winner != null ? state.winner : null),
         };
       });
     };

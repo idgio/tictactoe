@@ -36,18 +36,20 @@ const styles = theme => ({
 });
 
 function HomeLayout(props){
-    const { classes, currentPlayer, board, handleClickBtn } = props;
+    const { classes, currentPlayer, board, handleClickBtn, winner } = props;
   return (
     <div className={classes.root}>
       <Grid container justify="center" >
         <Grid item  xs={6 }>
           <Paper className={classes.paper}>
             
-                   {currentPlayer === true ? (
+                   {winner != null ?
+                    <Typography variant="title" color="inherit" className={classes.turn}>{winner}</Typography>
+                   :(currentPlayer === true ? (
                         <Typography variant="title" color="inherit" className={classes.turn}> Turn X </Typography>
                     ) : ( 
                         <Typography variant="title" color="inherit" className={classes.turn}> Turn O </Typography>
-                    )}
+                    ))}
             
             <GridList cellHeight={100} className={classes.gridList} cols={3}>
             
