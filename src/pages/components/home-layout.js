@@ -50,7 +50,7 @@ function HomeLayout(props){
   return (
     <div className={classes.root}>
       <Grid container justify="center" >
-        <Grid item  xs={6 }>
+        <Grid item  xs={12} md={6}>
           <Paper className={classes.paper} elevation={8}>
             
                    {winner != null ?
