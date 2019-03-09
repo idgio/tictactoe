@@ -37,7 +37,6 @@ const styles = theme => ({
 
 function HomeLayout(props){
     const { classes, currentPlayer, board, handleClickBtn } = props;
-    
   return (
     <div className={classes.root}>
       <Grid container justify="center" >

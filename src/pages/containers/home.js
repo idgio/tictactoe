@@ -30,10 +30,10 @@ winningStates.push([3, 6, 9]);
 winningStates.push([1, 5, 9]);
 winningStates.push([3, 5, 7]);
 
-function checkboardChanges(oldBoard, newBoard, currentPlayerState)
+function checkBoardChanges(oldBoard, newBoard)
 {
 
-  return oldBoard.every((value, index) => value === newBoard[index]) ? currentPlayerState : !currentPlayerState;
+  return oldBoard.every((value, index) => value === newBoard[index]);
   
 }
 
@@ -42,8 +42,8 @@ class Home extends Component {
   
     state = {
       gameActive: true,
-      playerOnePicks: null,
-      playerTwoPicks: null,
+      playerOnePicks: [],
+      playerTwoPicks: [],
       currentPlayer: true,
       board: [false,false,false,false,false,false,false,false,false],
     };
@@ -62,10 +62,15 @@ class Home extends Component {
             return item;
           }
         });
-  
+      const playerOneList = state.currentPlayer ? state.playerOnePicks.concat(i+1) : state.playerOnePicks;
+      const playerTwoList = !state.currentPlayer ? state.playerTwoPicks.concat(i+1) : state.playerTwoPicks;
+      const boardChange = checkBoardChanges(state.board, list);
         return {
           board: list,
-          currentPlayer: checkboardChanges(state.board, list, state.currentPlayer),
+          currentPlayer:  boardChange ? state.currentPlayer : !state.currentPlayer,
+          playerOnePicks: boardChange ? state.playerOnePicks : playerOneList,
+          playerTwoPicks: boardChange ? state.playerTwoPicks : playerTwoList,
+          
         };
       });
     };
