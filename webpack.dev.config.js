@@ -9,8 +9,9 @@ module.exports = {
     filename: 'js/[name].js'
   },
   devServer: {
+    port: 8080,
     disableHostCheck: true, 
-    public: 'https://7cd312684fb54cea8e5e778a380823ce.vfs.cloud9.us-east-2.amazonaws.com',
+    //public: 'https://7cd312684fb54cea8e5e778a380823ce.vfs.cloud9.us-east-2.amazonaws.com',
     historyApiFallback: true,
   },
   module: {
