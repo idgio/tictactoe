@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
+import Icon from '@material-ui/core/Icon';
 
 
 const styles = theme => ({
@@ -21,6 +21,15 @@ const styles = theme => ({
   noTextDeco: {
     textDecoration: 'none',
     color: theme.palette.primary.contrastText,
+  },
+  icon: {
+    color: theme.palette.primary.contrastText,
+    textAlign: 'center',
+    paddingRight: 10,
+    marginBottom: '-5px'
+  },
+  toolbarStyle: {
+    textAlign: 'center',
   }
 });
 
@@ -33,8 +42,12 @@ function ButtonAppBar(props) {
         
             <div className={classes.root}>
               <AppBar position="static" color="primary">
-                <Toolbar>
+                <Toolbar className={classes.toolbarStyle}>
+                  
                   <Typography variant="title" color="inherit" className={classes.flex}>
+                    <Icon className={classes.icon} >
+                      gamepad
+                    </Icon>
                     Tic Tac Toe
                   </Typography>
                     

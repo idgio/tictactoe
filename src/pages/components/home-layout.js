@@ -24,6 +24,7 @@ const styles = theme => ({
     height: '100%',
     borderRadius: '0px',
     fontSize: 50,
+   
   },
   buttonReset:
   {
@@ -32,37 +33,46 @@ const styles = theme => ({
   turn:
   {
     marginBottom: 15,
+  },
+  exElement:
+  {
+    color: theme.palette.secondary.dark,
+  },
+  zeroElement:
+  {
+    color: theme.palette.primary.dark,
   }
+  
 });
 
 function HomeLayout(props){
-    const { classes, currentPlayer, board, handleClickBtn, winner } = props;
+    const { classes, currentPlayer, board, handleClickBtn, winner, handleResetBtn } = props;
   return (
     <div className={classes.root}>
       <Grid container justify="center" >
         <Grid item  xs={6 }>
-          <Paper className={classes.paper}>
+          <Paper className={classes.paper} elevation={8}>
             
                    {winner != null ?
-                    <Typography variant="title" color="inherit" className={classes.turn}>{winner}</Typography>
+                    <Typography variant="title" color="primary" className={classes.turn}>{winner}</Typography>
                    :(currentPlayer === true ? (
-                        <Typography variant="title" color="inherit" className={classes.turn}> Turn X </Typography>
+                        <Typography variant="title" color="primary" className={classes.turn}> Choose a space: X </Typography>
                     ) : ( 
-                        <Typography variant="title" color="inherit" className={classes.turn}> Turn O </Typography>
+                        <Typography variant="title" color="primary" className={classes.turn}> Choose a space: O </Typography>
                     ))}
             
             <GridList cellHeight={100} className={classes.gridList} cols={3}>
             
             {(board || []).map((item,i) => (
               <GridListTile key={i}  cols={1}>
-                <Button variant="outlined" className={classes.button} onClick={() => {handleClickBtn(i)}}>
-                   <span>{item}</span>
+                <Button variant="outlined" className={classes.button} color="primary" onClick={() => {handleClickBtn(i)}}>
+                   <span className={item == 'X' ? classes.exElement : classes.zeroElement} >{item}</span>
                 </Button>
               </GridListTile>
             ))}
               
             </GridList>
-            <Button variant="contained" color="secondary" className={classes.buttonReset}>
+            <Button variant="contained" color="primary" className={classes.buttonReset} onClick={handleResetBtn}>
               Reset
             </Button>
           </Paper>
